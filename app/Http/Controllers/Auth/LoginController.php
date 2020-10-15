@@ -32,7 +32,13 @@ class LoginController extends Controller
    protected function redirectTo()
    {
         if(Auth::user()->usertype == 'admin'){
-            redirect('/admin')->with('status','You are in admin dashboard Panel');
+
+           return 'admin';
+
+        }
+        else if(Auth::user()->usertype == 'manager'){
+
+            return 'manager';
 
         }
         else{

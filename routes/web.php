@@ -22,12 +22,18 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [HomeController::class,'index'])->name('home');
-//Route::get('/admin', [AdminController::class, 'index'])->name('admin');
-Route::get('/manager', [ManagerController::class,'index'])->name('manager');
+Route::get('/home', [HomeController::class,'index'])->name('home')->middleware('auth');
+// Route::get('/admin', [AdminController::class, 'index'])->name('admin')->middleware('adminauth');
+// Route::get('/manager', [ManagerController::class,'index'])->name('manager')->middleware('managerauth');
 
-Route::group(['middleware' => ['auth', 'admin']], function(){
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+Route::group(['middleware' => ['auth', 'adminauth']], function(){
+   // Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+   Route::view('/admin','admin/index')->name('admin');
+});
+
+Route::group(['middleware' => ['auth', 'managerauth']], function(){
+
+    Route::get('/manager', [ManagerController::class,'index'])->name('manager');
 
 });
 

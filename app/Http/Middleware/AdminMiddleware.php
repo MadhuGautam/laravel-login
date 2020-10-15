@@ -16,20 +16,20 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::check()){
+        $usertype = Auth::user()->usertype;
 
-            if(Auth::user()->usertype == 'admin'){
-                return $next($request);
-            }
-            else{
-                redirect('/home')->with('status','You are in dashboard Panel');
-            }
+        if( $usertype == 'manager' && $usertype != null)
+        {
+            return redirect('manager');
 
-        }else{
+        }else if( $usertype == 'admin' && $usertype != null)
+        {
             return $next($request);
         }
+        else{
 
-
+            return redirect('home');
+        }
 
     }
 }
