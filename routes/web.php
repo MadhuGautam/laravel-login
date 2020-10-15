@@ -17,18 +17,17 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home');
+})->middleware('auth');
+
 
 Auth::routes();
 
 Route::get('/home', [HomeController::class,'index'])->name('home')->middleware('auth');
-// Route::get('/admin', [AdminController::class, 'index'])->name('admin')->middleware('adminauth');
-// Route::get('/manager', [ManagerController::class,'index'])->name('manager')->middleware('managerauth');
 
 Route::group(['middleware' => ['auth', 'adminauth']], function(){
-   // Route::get('/admin', [AdminController::class, 'index'])->name('admin');
-   Route::view('/admin','admin/index')->name('admin');
+   Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+//    Route::view('/admin','admin/index')->name('admin');
 });
 
 Route::group(['middleware' => ['auth', 'managerauth']], function(){
