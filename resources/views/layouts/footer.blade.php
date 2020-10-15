@@ -213,6 +213,17 @@
     });
   </script>
   <script>
+
+$(document).ready(function() {
+    alert("hii");
+    $('.sidebar .nav li a').click(function() {
+
+          $(this).parent('li').siblings().removeClass('active');
+          $(this).parent('li').addClass('active');
+});
+
+});
+
     $(document).ready(function() {
       // Javascript method's body can be found in assets/js/demos.js
       md.initDashboardPageCharts();

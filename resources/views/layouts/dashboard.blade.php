@@ -2,7 +2,7 @@
 
 <body>
   <div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="white">
+    <div class="sidebar" data-color="purple" data-background-color="" data-image="{{ url('assets/img/sidebar-1.jpg') }}" >
         <!--
             Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
@@ -22,6 +22,12 @@
             <a class="nav-link" href="#0">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="#1">
+              <i class="material-icons">person</i>
+              <p>Employees</p>
             </a>
           </li>
           <!-- your sidebar here -->
