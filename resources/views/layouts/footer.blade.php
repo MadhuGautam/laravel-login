@@ -215,7 +215,7 @@
   <script>
 
 $(document).ready(function() {
-    alert("hii");
+
     $('.sidebar .nav li a').click(function() {
 
           $(this).parent('li').siblings().removeClass('active');

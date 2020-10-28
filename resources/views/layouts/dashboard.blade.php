@@ -18,16 +18,22 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item active  ">
-            <a class="nav-link" href="#0">
+          <li class="nav-item active">
+            <a class="nav-link" href="{{ url('/dashboard') }}">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="#1">
+            <a class="nav-link" href="{{ url('/employee') }}">
               <i class="material-icons">person</i>
               <p>Employees</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="{{ url('/hotel') }}">
+              <i class="material-icons">location_ons</i>
+              <p>Hotels</p>
             </a>
           </li>
           <!-- your sidebar here -->

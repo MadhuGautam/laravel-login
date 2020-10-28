@@ -26,18 +26,21 @@ Auth::routes();
 Route::get('/home', [HomeController::class,'index'])->name('home')->middleware('auth');
 
 Route::group(['middleware' => ['auth', 'adminauth']], function(){
-   Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 //    Route::view('/admin','admin/index')->name('admin');
 });
 
 Route::group(['middleware' => ['auth', 'managerauth']], function(){
 
     Route::get('/manager', [ManagerController::class,'index'])->name('manager');
-
+    // Route::get('/dashboard', [ManagerController::class, 'index'])->name('dashboard');
 });
 
 Auth::routes();
 
+Route::get('/employee', 'EmployeeController@index')->name('employee');
+Route::get('/hotel', 'HotelController@index')->name('hotel');
 //Route::get('/home', 'HomeController@index')->name('home');
 
 //Auth::routes(['verify' => true]);
