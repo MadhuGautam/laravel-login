@@ -16,6 +16,12 @@
 
                     {{ __('You are logged in!') }}
                 </div>
+
+                <passport-clients></passport-clients>
+                <passport-authorized-clients></passport-authorized-clients>
+                <passport-personal-access-tokens></passport-personal-access-tokens>
+                {{-- //command for creating personal access token --}}
+                {{-- php artisan passport:client --personal --}}
             </div>
         </div>
     </div>

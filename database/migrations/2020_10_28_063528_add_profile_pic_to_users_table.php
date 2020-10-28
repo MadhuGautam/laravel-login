@@ -15,12 +15,12 @@ class AddProfilePicToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->string('profile_pic');
-            $table->bigInteger('contact');
-            $table->string('address');
-            $table->bigInteger('salary');
-            $table->string('description');
-            $table->bigInteger('added_by');
+            $table->string('profile_pic')->nullable();
+            $table->bigInteger('contact')->nullable();
+            $table->string('address')->nullable();
+            $table->bigInteger('salary')->nullable();
+            $table->string('description')->nullable();
+            $table->bigInteger('added_by')->nullable();
         });
     }
 
