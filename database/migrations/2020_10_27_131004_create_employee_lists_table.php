@@ -22,10 +22,10 @@ class CreateEmployeeListsTable extends Migration
             $table->string('emp_contact');
             $table->string('emp_role');
             $table->string('emp_address');
-            $table->string('emp_salary');
+            $table->bigInteger('emp_salary');
             $table->foreignId('assigned_hotel_id')->constrained('hotel_lists');
             $table->string('description');
-            $table->string('added_by');
+            $table->bigInteger('added_by');
             $table->timestamps();
         });
     }
