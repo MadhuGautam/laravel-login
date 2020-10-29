@@ -14,8 +14,8 @@ class AddForeignHotelIdToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->bigInteger('assigned_hotel_id')->unsigned()->nullable();
-            $table->foreign('assigned_hotel_id')->references('id')->on('hotel_lists')->onDelete('SET NULL');
+            $table->bigInteger('hotel_lists_id')->unsigned()->nullable();
+            $table->foreign('hotel_lists_id')->references('id')->on('hotel_lists')->onDelete('SET NULL');
         });
     }
 
@@ -27,8 +27,8 @@ class AddForeignHotelIdToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign(['assigned_hotel_id']);
-            $table->dropColumn('assigned_hotel_id');
+            $table->dropForeign(['hotel_lists_id']);
+            $table->dropColumn('hotel_lists_id');
         });
     }
 }

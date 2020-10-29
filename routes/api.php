@@ -19,9 +19,16 @@ use App\Http\Controller\AuthController;
 //     return $request->user();
 // });
 
+
 Route::post('register', 'AuthController@register');
 Route::post('login', 'AuthController@login');
-
+//Route::resource('hotel','HotelApiController');
 Route::middleware('auth:api')->group(function () {
     // Route::resource('posts', 'PostController');
+    Route::resource('hotel','HotelApiController');
+    Route::resource('room','RoomApiController');
+    Route::resource('booking','BookingApiController');
 });
+
+
+//Auth::routes();

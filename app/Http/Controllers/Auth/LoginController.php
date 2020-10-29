@@ -27,24 +27,41 @@ class LoginController extends Controller
      *
      * @var string
      */
-   // protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = RouteServiceProvider::HOME;
 
-   protected function redirectTo()
-   {
-        if(Auth::user()->usertype == 'admin'){
+//    protected function redirectTo()
+//    {
 
-           return 'admin';
+//         if(Auth::user()->usertype == 'admin'){
 
-        }
-        else if(Auth::user()->usertype == 'manager'){
+//            return 'admin';
 
-            return 'manager';
+//         }
+//         else if(Auth::user()->usertype == 'manager'){
 
-        }
-        else{
-            return 'home';
-        }
-   }
+//             return 'manager';
+
+//         }
+//         else{
+//             return 'home';
+//         }
+//    }
+
+//    public function login(Request $request)
+//     {
+//         $this->validateLogin($request);
+
+//         if ($this->attemptLogin($request)) {
+//             $user = $this->guard()->user();
+//             $user->generateToken();
+
+//             return response()->json([
+//                 'data' => $user->toArray(),
+//             ]);
+//         }
+
+//         return $this->sendFailedLoginResponse($request);
+//     }
 
     /**
      * Create a new controller instance.

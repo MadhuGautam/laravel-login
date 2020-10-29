@@ -20,8 +20,8 @@ class CreateHotelListsTable extends Migration
             $table->string('hotel_location');
             $table->string('hotel_email');
             $table->string('hotel_owner');
-            $table->bigInteger('no_of_rooms');
-            $table->string('description');
+            $table->bigInteger('no_of_rooms')->nullable();
+            $table->string('description')->nullable();
             $table->bigInteger('added_by');
             $table->timestamps();
         });

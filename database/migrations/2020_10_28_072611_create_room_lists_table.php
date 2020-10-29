@@ -15,12 +15,12 @@ class CreateRoomListsTable extends Migration
     {
         Schema::create('room_lists', function (Blueprint $table) {
             $table->id();
-            $table->string('Room_ID');
-            $table->bigInteger('room_cat');
-            $table->bigInteger('hotel_id');
-            $table->bigInteger('room_availability_status');
+            $table->string('room_cat');
+            $table->bigInteger('hotel_lists_id')->unsigned()->nullable();
+            $table->foreign('hotel_lists_id')->references('id')->on('hotel_lists')->onDelete('SET NULL');
+            $table->boolean('room_availability_status');
             $table->bigInteger('added_by');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }
