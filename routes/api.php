@@ -26,7 +26,7 @@ Route::post('login', 'AuthController@login');
 Route::middleware('auth:api')->group(function () {
     // Route::resource('posts', 'PostController');
     Route::resource('hotel','HotelApiController');
-    Route::resource('room','RoomApiController');
+    Route::resource('hotel.room','RoomApiController');
     Route::resource('booking','BookingApiController');
 });
 

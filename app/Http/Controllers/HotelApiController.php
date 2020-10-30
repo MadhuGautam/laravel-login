@@ -28,20 +28,27 @@ class HotelApiController extends Controller
         return response()->json($hotel, 201);
     }
 
-    public function update($id, Request $request)
+    public function update(Request $request, hotelLists $hotel)
     {
-        //$data = hotelLists::find(11);
-        return  $request->all();
+        // pass the ContentType as x-www-form-urlencoded from postman put request
         $hotel->update($request->all());
 
         return response()->json($hotel, 200);
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
-        //$hotel->delete();
-        DB::table('hotelLists')->where('id', $id)->delete();
+        $hotel = hotelLists::find($id);
+        if(is_null($hotel)){
+            return response()->json("record not found",404);
 
-        return response()->json(null, 204);
+        }else{
+
+            if($hotel->delete()){
+                return response()->json("record deleted", 204);
+            }
+            return response()->json("record not deleted", 500);
+        }
+
     }
 }
