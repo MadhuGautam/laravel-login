@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use app\User;
+use App\hotelLists;
 
 class EmployeeController extends Controller
 {
@@ -25,6 +27,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return view('employee/employee');
+        $data = User::addSelect(['hotel_lists_id' => hotelLists::select('hotel_name')->whereColumn('hotel_lists_id', 'hotel_lists.id')])->where('usertype',"!=",'admin')->get();
+        return view('employee/employee', ['data' => $data]);
     }
 }

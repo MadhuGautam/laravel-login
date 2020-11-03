@@ -19,67 +19,57 @@
                         Name
                       </th>
                       <th>
-                        Country
+                        Rooms
                       </th>
                       <th>
-                        City
+                        Location
                       </th>
                       <th>
-                        Salary
+                        Email
+                      </th>
+                      <th>
+                        operations
                       </th>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>
-                          1
-                        </td>
-                        <td>
-                          Dakota Rice
-                        </td>
-                        <td>
-                          Niger
-                        </td>
-                        <td>
-                          Oud-Turnhout
-                        </td>
-                        <td class="text-primary">
-                          $36,738
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          2
-                        </td>
-                        <td>
-                          Minerva Hooper
-                        </td>
-                        <td>
-                          Curaçao
-                        </td>
-                        <td>
-                          Sinaai-Waas
-                        </td>
-                        <td class="text-primary">
-                          $23,789
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          3
-                        </td>
-                        <td>
-                          Sage Rodriguez
-                        </td>
-                        <td>
-                          Netherlands
-                        </td>
-                        <td>
-                          Baileux
-                        </td>
-                        <td class="text-primary">
-                          $56,142
-                        </td>
-                      </tr>
+                        @foreach($data as $row)
+
+                            <tr>
+                                <td>
+                                    {{ $row->id  }}
+                                </td>
+                                <td>
+                                   <a href="{{ url('/hotel') }}/{{ $row->id  }}">{{ $row->hotel_name  }}</a>
+
+                                </td>
+                                <td>
+                                    @if (count($row->rooms) >0)
+
+                                       <p class="justify-content-center ml-4">{{ count($row->rooms)}}</p>
+                                    @else
+                                      <button type="button" rel="tooltip" title="Add Rooms" onclick="location.href='{{ url('/hotel') }}/{{ $row->id.'/addRoom' }}'" class="btn btn-primary btn-link btn-sm">
+                                        <i class="material-icons">add</i>
+                                      </button>
+                                    @endif
+
+                                </td>
+                                <td>
+                                    {{ $row->hotel_location  }}
+                                </td>
+                                <td>
+                                    {{ $row->hotel_email  }}
+                                </td>
+                                <td class="text-primary">
+                                    <button type="button" rel="tooltip" title="Edit Details" class="btn btn-primary btn-link btn-sm">
+                                        <i class="material-icons">edit</i>
+                                    </button>
+                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                        <i class="material-icons">close</i>
+                                    </button>
+                                </td>
+                            </tr>
+
+                        @endforeach
 
                     </tbody>
                   </table>

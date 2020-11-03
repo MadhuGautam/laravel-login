@@ -17,7 +17,7 @@ class CreateBookingListsTable extends Migration
             $table->id();
             $table->bigInteger('booking_name');
             $table->bigInteger('room_lists_id');
-            $table->bigInteger('hotel_list_id');
+            $table->bigInteger('hotel_lists_id');
             $table->bigInteger('room_price');
             $table->bigInteger('Booking_num_of_days');
             $table->dateTime('Booking_date_from');

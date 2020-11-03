@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\Hotel\HotelController;
+use App\Http\Controllers\RoomController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +22,7 @@ Route::get('/', function () {
     return view('home');
 })->middleware('auth');
 
-
+// Route::post('/room', 'RoomController@index');
 Auth::routes();
 
 Route::get('/home', [HomeController::class,'index'])->name('home')->middleware('auth');
@@ -40,7 +42,24 @@ Route::group(['middleware' => ['auth', 'managerauth']], function(){
 Auth::routes();
 
 Route::get('/employee', 'EmployeeController@index')->name('employee');
-Route::get('/hotel', 'HotelController@index')->name('hotel');
-//Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/hotel', 'HotelController@index')->name('hotel');
+//Route::get('/hotel/{hotel}', 'HotelController@show')->name('hotel.show');
+// Route::resource('hotel','HotelController');
+// Route::resource('hotel/1/room','RoomController');
+Route::view('/booking', 'booking/index')->name('booking');
 
 //Auth::routes(['verify' => true]);
+
+Route::namespace('Admin\Hotel')->group(function () {
+    Route::resource('hotel', 'HotelController');
+    Route::prefix('hotel')->name('hotel.')->group(function () {
+        Route::resource('gallery', 'HotelGalleryController');
+        Route::resource('room', 'RoomController');
+        Route::resource('room/gallery', 'RoomGalleryController');
+    });
+});
+
+Route::get('ajax',function() {
+    return view('hotels/description');
+ });
+ Route::post('/getmsg','RoomController@index');

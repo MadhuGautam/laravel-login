@@ -1,33 +1,39 @@
 <?php
 
-namespace App\Http\Controllers;
 
+namespace App\Http\Controllers\Admin\Hotel;
+
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\hotelLists;
 use App\roomLists;
 
 
-class RoomApiController extends Controller
+class RoomController extends Controller
 {
     public function index()
     {
-        return roomLists::get();
+        return "index";
+        //echo $data=roomLists::get();
+        //return view('hotels/index', ['data' => $data]);
     }
 
     public function show($id)
     {
-        //$room = roomLists::with('hotelLists')->findOrFail($id); //call hotelLists function in App\roomLists
-        $room = roomLists::addSelect(['hotel_lists_id' => hotelLists::select('hotel_name')->whereColumn('hotel_lists_id', 'hotel_lists.id')])->get();
+
+        $room = roomLists::with('hotelLists')->where('hotel_lists_id', '=', $id )->get(); //call hotelLists function in App\roomLists
+        //$room = roomLists::addSelect(['hotel_lists_id' => hotelLists::select('hotel_name')->whereColumn('hotel_lists_id', 'hotel_lists.id')])->get();
 
         if(is_null($room)){
             return response()->json(null,404);
         }
-        return $room;
+        return view('rooms/index', ['data' => $room]);
 
     }
 
     public function store(Request $request)
     {
+        return "vbhzxcvb";
         $room = roomLists::create($request->all());
 
         return response()->json($room, 201);

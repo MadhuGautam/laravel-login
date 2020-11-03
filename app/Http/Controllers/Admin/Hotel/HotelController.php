@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin\Hotel;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\hotelLists;
+
+
 class HotelController extends Controller
 {
     /**
@@ -43,4 +46,6 @@ class HotelController extends Controller
         $data = hotelLists::with('rooms')->get();
         return view('hotels/index', ['data' => $data]);
     }
+
+
 }

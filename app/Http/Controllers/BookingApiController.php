@@ -16,7 +16,7 @@ class BookingApiController extends Controller
      */
     public function index()
     {
-        //
+        return bookingLists::get();
     }
 
     /**
@@ -37,31 +37,35 @@ class BookingApiController extends Controller
      */
     public function store(Request $request)
     {
-        $booking = BookingLists::create($request->all());
-        $hotel_id = $request->input('hotel_id');
-        $room_id = $request->input('room_id');
-        RoomLists::where('hotel_id',$hotel_id)->where('id',$room_id)->update(['room_availability_status' => 0]);
+        $booking = bookingLists::create($request->all());
+        $hotel_id = $request->input('hotel_lists_id');
+        $room_id = $request->input('room_lists_id');
+        RoomLists::where('hotel_lists_id',$hotel_id)->where('id',$room_id)->update(['room_availability_status' => 0]);
         return response()->json($booking, 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Booking  $booking
+     * @param  \App\bookingLists  $booking
      * @return \Illuminate\Http\Response
      */
-    public function show(Booking $booking)
+    public function show(bookingLists $booking)
     {
-        //
+        $booking = bookingLists::findOrFail($id); //call hotelLists function in App\roomLists
+        if(is_null($booking)){
+            return response()->json(null,404);
+        }
+        return $booking;
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Booking  $booking
+     * @param  \App\bookingLists  $booking
      * @return \Illuminate\Http\Response
      */
-    public function edit(Booking $booking)
+    public function edit(bookingLists $booking)
     {
         //
     }
@@ -70,22 +74,26 @@ class BookingApiController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Booking  $booking
+     * @param  \App\bookingLists  $booking
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Booking $booking)
+    public function update(Request $request, bookingLists $booking)
     {
-        //
+        $booking->update($request->all());
+
+        return response()->json($booking, 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Booking  $booking
+     * @param  \App\bookingLists  $booking
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Booking $booking)
+    public function destroy(bookingLists $booking)
     {
-        //
+        $booking->delete();
+
+        return response()->json("record deleted", 204);
     }
 }

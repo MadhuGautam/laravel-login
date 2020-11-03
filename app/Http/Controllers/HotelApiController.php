@@ -13,7 +13,7 @@ class HotelApiController extends Controller
 
     public function show($id)
     {
-        $hotel = hotelLists::with('rooms')->findOrFail($id);
+        $hotel = hotelLists::with('rooms')->findOrFail($id); //call rooms function in App\hotelLists
         if(is_null($hotel)){
             return response()->json(null,404);
         }
