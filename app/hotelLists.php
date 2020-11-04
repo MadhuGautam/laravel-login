@@ -11,6 +11,6 @@ class hotelLists extends Model
     ];
     public function rooms()
     {
-        return $this->hasMany('App\RoomLists');
+        return $this->hasMany('App\roomLists');
     }
 }

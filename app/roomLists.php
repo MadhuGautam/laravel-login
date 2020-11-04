@@ -13,4 +13,9 @@ class roomLists extends Model
     public function hotelLists(){
         return $this->belongsTo("App\hotelLists");
     }
+
+    public function bookings()
+    {
+        return $this->hasMany('App\bookingLists');
+    }
 }
