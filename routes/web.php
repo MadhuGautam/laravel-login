@@ -62,6 +62,8 @@ Route::namespace('Admin\Hotel')->group(function () {
 Route::get('ajax',function() {
     return view('hotels/description');
  });
-Route::post('/getmsg/{id}/{bookingDate}','RoomController@index');
+Route::post('/getmsg/{id}','RoomController@index');
 
-Route::get('/hotel/{hotelId}/room/{roomId}','BookingController@index');
+Route::get('/hotel/{hotelId}/room/{roomId}/{bookId}','BookingController@index');
+
+Route::get('/hotel/{hotelId}/room/{roomId}','BookingController@addBooking');

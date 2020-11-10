@@ -9,11 +9,11 @@ use App\bookingLists;
 
 class RoomController extends Controller
 {
-    public function index1($hotel_id)
-    {
-        $data=roomLists::get();
-        return "vbhzxcvb";
-    }
+    // public function index1($hotel_id)
+    // {
+    //     $data=roomLists::get();
+    //     return "vbhzxcvb";
+    // }
 
     public function show($id)
     {
@@ -62,12 +62,8 @@ class RoomController extends Controller
     public function index(Request $request)
     {
         $id = $_REQUEST['id'];
-        $bookingDate = $_REQUEST['bookingDate'];
         $msg = roomLists::with('bookings')->where('hotel_lists_id', $id)->get();
-       // addSelect(['booking_status' => bookingLists::select('hotel_name')->whereColumn('hotel_lists_id', 'hotel_lists.id')])->get();
-        //where('created_at', $bookingDate)->get();
-       // return response()->json(array('msg'=> $msg), 200);
-    //    ->where('Booking_date_from', '=', $bookingDate->toDateTimeString())->orWhere('Booking_date_to', '>=', $bookingDate->toDateTimeString())
-       return response()->json($msg);
+
+        return response()->json($msg);
     }
 }

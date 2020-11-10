@@ -7,6 +7,7 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header card-header-primary">
+                        <span id="hotel_id" style="visibility: hidden">{{$data->id}}</span>
                         <h4 class="card-title">{{$data->hotel_name}}</h4>
                         <p class="card-category">{{$data->hotel_email}}</p>
                         </div>
@@ -67,6 +68,7 @@
 
         function getMessage()
         {
+            var hotel_id = {{$data->id}};
             var formdate = document.getElementById("booking_date").value;
             var fd = Date.parse(formdate);
 
@@ -75,8 +77,8 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                url:'/getmsg/{id}/{bookingDate}',
-                data: { "_token": "{{ csrf_token() }}", id: 1, bookingDate: "2020-10-29 10:32:41"},
+                url:'/getmsg/{id}',
+                data: { "_token": "{{ csrf_token() }}", id: hotel_id},
 
                 success:function(data) {
                 if(data){
@@ -105,12 +107,12 @@
 
                                 if((fd >= Date.parse(bookingfromdate[0])) && (fd <= Date.parse(bookingtodate[0])) )
                                 {
-
-                                    booking_status = "Booked"; border_color = "border-danger"; booking_detail_link = "{{ url('/hotel') }}/"+bookVal.hotel_lists_id+"{{ '/room' }}/"+val.id;
+                                    console.log(bookVal.id);
+                                    booking_status = "Booked"; border_color = "border-danger"; booking_detail_link = "{{ url('/hotel') }}/"+bookVal.hotel_lists_id+"{{ '/room' }}/"+val.id+"/"+bookVal.id;
 
                                 }else{
 
-                                    booking_status = "Available"; border_color = "border-success"; booking_detail_link = "#";
+                                    booking_status = "Available"; border_color = "border-success"; booking_detail_link = "{{ url('/hotel') }}/"+bookVal.hotel_lists_id+"{{ '/room' }}/"+val.id;
                                 }
 
                                 json_data += '<div class="col-lg-3 col-md-6 col-sm-6 border border-success rounded mw-15 m-1 '+ border_color +' ">'+

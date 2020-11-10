@@ -18,4 +18,5 @@ class roomLists extends Model
     {
         return $this->hasMany('App\bookingLists');
     }
+
 }

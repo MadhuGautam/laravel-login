@@ -14,4 +14,9 @@ class bookingLists extends Model
     public function roomLists(){
         return $this->belongsTo("App\roomLists");
     }
+
+    // public function questLists(){
+    //     return $this->belongsTo("App\questLists");
+    // }
+
 }
