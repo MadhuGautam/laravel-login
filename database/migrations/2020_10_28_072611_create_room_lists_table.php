@@ -19,6 +19,7 @@ class CreateRoomListsTable extends Migration
             $table->bigInteger('hotel_lists_id')->unsigned()->nullable();
             $table->foreign('hotel_lists_id')->references('id')->on('hotel_lists')->onDelete('SET NULL');
             $table->boolean('room_availability_status');
+            $table->bigInteger('room_price');
             $table->bigInteger('added_by');
             $table->string('description')->nullable();
             $table->timestamps();

@@ -15,7 +15,7 @@ class CreateBookingListsTable extends Migration
     {
         Schema::create('booking_lists', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('booking_name');
+            $table->string('booking_name');
             $table->bigInteger('room_lists_id');
             $table->bigInteger('hotel_lists_id');
             $table->bigInteger('room_price');

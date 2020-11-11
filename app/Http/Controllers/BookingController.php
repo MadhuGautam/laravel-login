@@ -16,26 +16,60 @@ class BookingController extends Controller
         $roomid = $request->roomId;
         $bookid = $request->bookId;
 
-        // $msg = roomLists::with('bookings')->where('hotel_lists_id', $hotelid)->where('id', $roomid)->
-        // addSelect(['hotel_lists_id' => hotelLists::select('hotel_name')->whereColumn('hotel_lists_id', 'hotel_lists.id')])->get();
-
         $roomData = roomLists::with('bookings')->where('hotel_lists_id', $hotelid)->where('id', $roomid)->
         addSelect(['hotel_lists_id' => hotelLists::select('hotel_name')->whereColumn('hotel_lists_id', 'hotel_lists.id')])->get();
 
-        $questData = questLists::where('booking_lists_id', $bookid)->get();
-        $data = $questData->concat($roomData);
-        $msg = $data->all();
+        foreach ($roomData as $book){
+            foreach ($book->bookings as $bookData){
 
-        return view('hotels/bookingDetails', ['data' => $msg]);
+                if($bookData->id ==  $bookid)
+                {
+                    $questData = questLists::where('booking_lists_id', $bookid)->get();
+                    $data = $questData->concat($roomData);
+                    $msg = $data->all();
+                    return view('hotels/bookingDetails', ['data' => $msg]);
+                }
+                else{
+
+                    return response()->json("No Data Found",404);
+                }
+
+            }
+        }
+
+        return response()->json("No Data Found",404);
+
     }
 
-    public function addBooking(Request $request)
+    public function add(Request $request)
     {
         $hotelid = $request->hotelId;
         $roomid = $request->roomId;
 
-        $hotel = hotelLists::where('id', $hotelid)->get();
+        // $hotel = hotelLists::where('id', $hotelid)->get();
 
-        return view('hotels/addBooking', ['hotelid' => $hotelid, 'roomid' => $roomid, 'hotel' => $hotel ]);
+        // return view('hotels/addBooking', ['hotelid' => $hotelid, 'roomid' => $roomid, 'hotel' => $hotel ]);
+
+        $roomData = roomLists::where('hotel_lists_id', $hotelid)->where('id', $roomid)->
+        addSelect(['hotel_name' => hotelLists::select('hotel_name')->whereColumn('hotel_lists_id', 'hotel_lists.id')])->get();
+
+        return view('hotels/addBooking', ['hotel' => $roomData ]);
+    }
+
+    public function store(Request $request){
+
+        $validatedData = $request->validate([
+            // 'title' => 'required|unique:posts|max:255',
+            // 'body' => 'required',
+            'bookdatefrom' => 'required|date|date_format:Y-m-d|after:yesterday',
+            'bookdateto' => 'required|date|date_format:Y-m-d|after:yesterday',
+            'questContact' => 'required|min:10|max:10',
+
+        ]);
+
+
+
+
+        return $request;
     }
 }

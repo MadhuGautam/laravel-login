@@ -53,17 +53,21 @@ Route::view('/booking', 'booking/index')->name('booking');
 Route::namespace('Admin\Hotel')->group(function () {
     Route::resource('hotel', 'HotelController');
     Route::prefix('hotel')->name('hotel.')->group(function () {
-        Route::resource('gallery', 'HotelGalleryController');
+        // Route::resource('gallery', 'HotelGalleryController');
         Route::resource('room', 'RoomController');
-        Route::resource('room/gallery', 'RoomGalleryController');
+        // Route::resource('room/gallery', 'RoomGalleryController');
     });
 });
 
 Route::get('ajax',function() {
     return view('hotels/description');
- });
-Route::post('/getmsg/{id}','RoomController@index');
+ })->middleware('auth');
 
-Route::get('/hotel/{hotelId}/room/{roomId}/{bookId}','BookingController@index');
+Route::post('/getmsg/{id}','RoomController@index')->middleware('auth');
 
-Route::get('/hotel/{hotelId}/room/{roomId}','BookingController@addBooking');
+Route::get('/hotel/{hotelId}/room/{roomId}/{bookId}','BookingController@index')->middleware('auth');
+
+Route::get('/hotel/{hotelId}/room/{roomId}','BookingController@add')->middleware('auth');
+Route::post('/hotel/{hotelId}/room/{roomId}','BookingController@store')->middleware('auth');
+
+
