@@ -72,12 +72,7 @@ class RegisterController extends Controller
 
             ]);
         print_r($data1); die();
-        // return User::create([
-        //     'name' => $data['name'],
-        //     'email' => $data['email'],
-        //     'password' => Hash::make($data['password']),
-        //     'usertype' => "admin",
-        // ]);
+
     }
     protected function registered(Request $request, $user)
     {
