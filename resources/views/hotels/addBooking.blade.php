@@ -108,10 +108,10 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        Total Received Amount
+                                                        Discount
                                                     </td>
                                                     <td>
-                                                        <input type="number" id="totalRecievedAmount" name="totalRecievedAmount" class="form-control" readonly="readonly" required>
+                                                        <input type="number" id="discount" name="discount" class="form-control" required>
 
                                                     </td>
 
@@ -124,6 +124,26 @@
                                                     </td>
 
                                                 </tr>
+                                                <tr>
+                                                    <td>
+                                                        Total Recieved Amount
+                                                    </td>
+                                                    <td>
+
+                                                        <input type="number" id="totalRecievedAmount" name="totalRecievedAmount" class="form-control" readonly="readonly" required>
+
+                                                    </td>
+
+                                                    <td>
+                                                        Booking From
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="bookingFrom" name="bookingFrom" class="form-control" required>
+
+                                                    </td>
+
+                                                </tr>
+
 
                                                 <tr class="mt-10">
                                                     <th colspan=4 style="border:0"><h2>Quest Details</h2></th>

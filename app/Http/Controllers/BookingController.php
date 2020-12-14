@@ -67,9 +67,27 @@ class BookingController extends Controller
 
         ]);
 
+            $bookId = bookingLists::insertGetId(
+            ['booking_name' => $request->bookingName, 'room_price' => $request->roomPrice, 'room_lists_id'=> $request->roomId, 'hotel_lists_id'=> $request->hotel_id,
+             'Booking_num_of_days'=> $request->BookingDays,  'Booking_date_from'=> $request->bookdatefrom,
+             'Booking_date_to'=> $request->bookdateto,  'room_price_per_day'=> $request->roomPrice,  'discount_amount'=> $request->discount,
+             'charged_booking_amount'=> $request->bookedAmount, 'booking_status'=> "confirmed", 'Total_room_amount'=> $request->bookTotalAmount,
+             'Total_paid_amount'=> $request->totalRecievedAmount, 'Payment_mode'=> $request->paymentMode, 'description'=> $request->description, 'added_by'=> 1,
+             'booking_from'=> $request->bookingFrom]
+        );
 
+        if($bookId > 0)
+        {
+            $questId = questLists::insertGetId(
+                ['booking_lists_id' => $bookId, 'quest_name' => $request->questName, 'quest_image' => $request->questimage,
+                'quest_from' => $request->questfrom, 'quest_contact' => $request->questContact, 'purpose' => $request->visitPurpose,
+                'num_of_person' => $request->num_of_persons, 'num_of_docs_submit' => 0, 'aadhar_card_url' => "",
+                'licence_card_url' => "", 'voter_card_url' => "",
+                'other_docs_url' => "", 'checkin_datetime' => $request->bookdatefrom,
+                'checkout_datetime' => $request->bookdateto, 'description'=> $request->description, 'added_by'=> 1]
+            );
+        }
 
-
-        return $request;
+        return $questId;
     }
 }

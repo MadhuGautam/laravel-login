@@ -31,7 +31,7 @@ class CreateBookingListsTable extends Migration
             $table->string('Payment_mode');
             $table->string('description');
             $table->bigInteger('added_by');
-            $table->bigInteger('booking_from');
+            $table->string('booking_from');
             $table->timestamps();
         });
     }
