@@ -23,9 +23,9 @@
               <li class="nav-item">
                 <a class="nav-link" href="javascript:;">
                   <i class="material-icons">dashboard</i>
-                  <!-- <p class="d-lg-none d-md-block">
+                  <p class="d-lg-none d-md-block">
                     Stats
-                  </p> -->
+                  </p>
                 </a>
               </li>
               <li class="nav-item">
@@ -35,7 +35,7 @@
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link" href="javascript:;" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="material-icons">person {{ Auth::user()->name }}</i>
+                  <i class="material-icons">person</i>
                   <!-- <p class="d-lg-none d-md-block"> -->
                   {{ Auth::user()->name }}
                   <!-- </p> -->

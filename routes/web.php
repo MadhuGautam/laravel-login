@@ -30,21 +30,21 @@ Route::get('/home', [HomeController::class,'index'])->name('home')->middleware('
 Route::group(['middleware' => ['auth', 'adminauth']], function(){
     Route::get('/admin', [AdminController::class, 'index'])->name('admin');
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
-//    Route::view('/admin','admin/index')->name('admin');
+    //Route::view('/admin','admin/index')->name('admin');
 });
 
 Route::group(['middleware' => ['auth', 'managerauth']], function(){
 
-    Route::get('/manager', [ManagerController::class,'index'])->name('manager');
-    // Route::get('/dashboard', [ManagerController::class, 'index'])->name('dashboard');
+    //Route::get('/manager', [ManagerController::class,'index'])->name('manager');
+    Route::get('/dashboard', [ManagerController::class, 'index'])->name('dashboard');
 });
 
 Auth::routes();
 
 Route::get('/employee', 'EmployeeController@index')->name('employee');
 // Route::get('/hotel', 'HotelController@index')->name('hotel');
-//Route::get('/hotel/{hotel}', 'HotelController@show')->name('hotel.show');
-// Route::resource('hotel','HotelController');
+Route::get('/hotel/{hotel}/edit', 'HotelController@show');
+Route::resource('hotel','HotelController');
 // Route::resource('hotel/1/room','RoomController');
 Route::view('/booking', 'booking/index')->name('booking');
 

@@ -1,6 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
+
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -60,7 +61,7 @@
                                     {{ $row->hotel_email  }}
                                 </td>
                                 <td class="text-primary">
-                                    <button type="button" rel="tooltip" title="Edit Details" class="btn btn-primary btn-link btn-sm">
+                                    <button type="button" rel="tooltip" title="Edit Details" class="btn btn-primary btn-link btn-sm" onclick="location.href='{{ url('/hotel') }}/{{ $row->id }}'">
                                         <i class="material-icons">edit</i>
                                     </button>
                                     <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">

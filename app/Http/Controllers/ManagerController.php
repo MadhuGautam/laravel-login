@@ -13,6 +13,7 @@ class ManagerController extends Controller
      */
     public function index()
     {
-        return view('manager/index');
+        return view('panel/index');
+        //return view('manager/index');
     }
 }

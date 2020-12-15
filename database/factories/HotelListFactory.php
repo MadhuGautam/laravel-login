@@ -10,6 +10,8 @@ $factory->define(hotelLists::class, function (Faker $faker) {
         'hotel_name' => $faker->company,
         'hotel_email' => $faker->unique()->safeEmail,
         'hotel_owner' => $faker->company,
+        'description' => $faker->paragraph,
+        'no_of_rooms' => $faker->numberBetween(50,200),
         'added_by' =>1,
         //'phone' => $faker->phoneNumber,
         'hotel_location' => $faker->address,
