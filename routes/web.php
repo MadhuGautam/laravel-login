@@ -6,6 +6,7 @@ use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\Hotel\HotelController;
 use App\Http\Controllers\RoomController;
+Use App\Http\Controllers\Auth\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,29 +36,27 @@ Route::group(['middleware' => ['auth', 'adminauth']], function(){
 
 Route::group(['middleware' => ['auth', 'managerauth']], function(){
 
-    //Route::get('/manager', [ManagerController::class,'index'])->name('manager');
+    Route::get('/manager', [ManagerController::class,'index'])->name('manager');
     Route::get('/dashboard', [ManagerController::class, 'index'])->name('dashboard');
 });
 
-Auth::routes();
-
 Route::get('/employee', 'EmployeeController@index')->name('employee');
 // Route::get('/hotel', 'HotelController@index')->name('hotel');
-Route::get('/hotel/{hotel}/edit', 'HotelController@show');
+//Route::get('/hotel/{hotel}/edit', 'HotelController@show');
 Route::resource('hotel','HotelController');
-// Route::resource('hotel/1/room','RoomController');
+Route::resource('hotel/{hotelId}/room','RoomController');
 Route::view('/booking', 'booking/index')->name('booking');
 
 //Auth::routes(['verify' => true]);
 
-Route::namespace('Admin\Hotel')->group(function () {
-    Route::resource('hotel', 'HotelController');
-    Route::prefix('hotel')->name('hotel.')->group(function () {
-        // Route::resource('gallery', 'HotelGalleryController');
-        Route::resource('room', 'RoomController');
-        // Route::resource('room/gallery', 'RoomGalleryController');
-    });
-});
+// Route::namespace('Admin\Hotel')->group(function () {
+//     Route::resource('hotel', 'HotelController');
+//     Route::prefix('hotel')->name('hotel.')->group(function () {
+//         // Route::resource('gallery', 'HotelGalleryController');
+//         Route::resource('room', 'RoomController');
+//         // Route::resource('room/gallery', 'RoomGalleryController');
+//     });
+// });
 
 Route::get('ajax',function() {
     return view('hotels/description');
@@ -70,4 +69,4 @@ Route::get('/hotel/{hotelId}/room/{roomId}/{bookId}','BookingController@index')-
 Route::get('/hotel/{hotelId}/room/{roomId}','BookingController@add')->middleware('auth');
 Route::post('/hotel/{hotelId}/room/{roomId}','BookingController@store')->middleware('auth');
 
-
+Route::get('/verify','RegisterController@verifyuser')->name('verify.user');

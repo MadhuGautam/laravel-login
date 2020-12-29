@@ -30,11 +30,14 @@
 
                             @else
                                 <h4 class="title">No rooms found</h4>
-                                {{-- <span>
-                                <button type="button" rel="tooltip" title="Add Rooms" onclick="location.href='{{ url('/hotel') }}/{{ $data->id.'/addRoom'}}'" class="btn btn-primary btn-link btn-sm">
-                                        <i class="material-icons">add</i> Add Rooms
+                                <span>
+                                <button type="button" rel="tooltip" title="Add Rooms" onclick="location.href='{{ url('/hotel') }}/{{ $data->id.'/room/create'}}'" class="btn btn-primary btn-sm">
+                                        <i class="material-icons">add</i>Add Room
                                     </button>
-                                </span> --}}
+                                </span>
+                                {{-- <button type="button" rel="tooltip" title="Add new Hotel" class="btn btn-success btn-sm float-right" onclick="location.href='{{ url('/hotel/create') }}'">
+                                    <i class="material-icons">add</i>
+                                </button> --}}
                             @endif
 
                         </div>

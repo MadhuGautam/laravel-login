@@ -25,4 +25,61 @@
   <!-- Material Kit CSS -->
   <link href="{{ asset('assets/css/material-dashboard.css?v=2.1.2') }}" rel="stylesheet" />
   {{-- <link href="{{ asset('assets/demo/demo.css') }}" rel="stylesheet" /> --}}
+  <style>
+    body {
+      margin:0px;
+    }
+
+    .center {
+      display:inline;
+      margin: 3px;
+    }
+
+    .form-input {
+      width:100px;
+      padding:3px;
+      background:#fff;
+      /* border:2px dashed dodgerblue; */
+    }
+    .form-input input {
+      display:none;
+    }
+    /* .form-input label {
+      display:block;
+      width:100px;
+      height: auto;
+      max-height: 100px;
+      background:#333;
+      border-radius:10px;
+      cursor:pointer;
+    } */
+
+    .form-input img {
+      width:25rem;
+      height: 16rem;
+      margin: 2px;
+      /* opacity: .4; */
+    }
+
+    .imgRemove{
+      position: relative;
+      bottom: 114px;
+      left: 68%;
+      background-color: transparent;
+      border: none;
+      font-size: 30px;
+      outline: none;
+    }
+    .imgRemove::after{
+      content: ' \21BA';
+      color: #fff;
+      font-weight: 900;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .small{
+      color: firebrick;
+    }
+    </style>
+
 </head>

@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\MailController;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -62,22 +63,48 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
-    {
-        $data1 = User::create([
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'password' => Hash::make($data['password']),
-                'usertype' => "admin",
+    // protected function create(array $data)
+    // {
+    //     return User::create([
+    //             'name' => $data['name'],
+    //             'email' => $data['email'],
+    //             'password' => Hash::make($data['password']),
+    //             'usertype' => "manager",
+    //             'hotel_lists_id' => 120,
+    //             'api_token' => Hash::make($data['email']),
 
-            ]);
-        print_r($data1); die();
+    //     ]);
 
+
+    // }
+    // protected function registered(Request $request, $user)
+    // {
+    //     $user->generateToken();
+    //     return response()->json(['data' => $user->toArray()], 201);
+    // }
+
+    public function register(Request $request){
+
+        $user = new User();
+        $user->name= $request->name;
+        $user->email = $request->email;
+        $user->password =  Hash::make($request->password);
+        $user->usertype = "manager";
+        $user->verification_code = sha1(time());
+        $user->save();
+
+        // if($user !=null){
+        //     MailController::sendSignupEmail($user->name, $user->email, $user->verification_code);
+        //     return redirect()->back()->with(session()->flash('alert-success', 'Your account has been created. Please check email for verification link.'));
+        // }
+
+        // return redirect()->back()->with(session()->flash('alert-danger', 'Something went wrong.'));
+
+        return redirect()->back()->with(session()->flash('alert-success', 'Your account has been created..'));
     }
-    protected function registered(Request $request, $user)
-    {
-        $user->generateToken();
 
-        return response()->json(['data' => $user->toArray()], 201);
+    public function verifyUser(Request $request){
+
+
     }
 }

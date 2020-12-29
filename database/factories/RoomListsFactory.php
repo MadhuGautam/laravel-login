@@ -9,6 +9,7 @@ $factory->define(roomLists::class, function (Faker $faker) {
     // $faker->addProvider(new Xvladqt\Faker\LoremFlickrProvider($faker));
     return [
         'room_cat' => $faker->randomElements($array = array ('economy','luxury'), $count = 1)[0],
+        'room_name' => $faker->randomElements($array = array ('F','S','T','FO','FV'), $count = 1)[0].$faker->numberBetween(1,20),
         //'beds' => $faker->numberBetween(1,4),
         // 'facilities' => $faker->words($nb = 3, $asText = false),
         // 'image' => "http://loremflickr.com/640/480/cats/",

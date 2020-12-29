@@ -32,7 +32,7 @@ class HotelController extends Controller
         if(is_null($hotel)){
             return response()->json(null,404);
         }
-        return view('hotels/description', ['data' => $hotel]);
+        return view('hotels/editHotel', ['data' => $hotel]);
     }
 
     /**

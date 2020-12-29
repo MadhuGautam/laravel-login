@@ -9,12 +9,43 @@ use App\bookingLists;
 
 class RoomController extends Controller
 {
-    // public function index1($hotel_id)
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    // /**
+    //  * Display a listing of the resource.
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function index(Request $request)
     // {
-    //     $data=roomLists::get();
-    //     return "vbhzxcvb";
+    //     $data = roomLists::with('bookings')->where('hotel_lists_id', $request->id)->get();
+    //     return view('hotels/index', ['data' => $data]);
+
     // }
 
+    /**
+         * Show the form for creating a new resource.
+         * @return \Illuminate\Http\Response
+
+    */
+    public function create($hotelId)
+    {
+        return view('hotels/addRoom', ['hotel_id' =>$hotelId]);
+
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function show($id)
     {
 
@@ -28,12 +59,24 @@ class RoomController extends Controller
 
     }
 
-    public function store(Request $request)
+    public function store(Request $request, $hotelId)
     {
+        $hotel = hotelLists::findOrFail($hotelId); //call rooms function in App\hotelLists
+        if(is_null($hotel)){
+            return redirect()->back()->withErrors('Hotel does not exist.');
+        }
 
-        $room = roomLists::create($request->all());
+        $room = roomLists::create(['room_cat' =>$request->room_cat,
+        'hotel_lists_id' =>$request->hotel_lists_id,
+        'room_availability_status' =>'1',
+        'room_price' =>(strcmp($request->room_cat,"luxury") == 0)? 4000: 3000,
+        'added_by' =>$request->user_id,
+        'description' =>$request->description,
+        'room_name' =>$request->room_name]);
 
-        return response()->json($room, 201);
+        $hotel = hotelLists::with('rooms')->findOrFail($hotelId);
+        return redirect()->action('HotelController@show', $hotelId);
+       // return view('hotels/description', ['data' => $hotel]);
     }
 
     public function update(Request $request, RoomLists $room)
@@ -59,11 +102,5 @@ class RoomController extends Controller
     //    return response()->json($msg);
     // }
 
-    public function index(Request $request)
-    {
-        $id = $_REQUEST['id'];
-        $msg = roomLists::with('bookings')->where('hotel_lists_id', $id)->get();
 
-        return response()->json($msg);
-    }
 }
