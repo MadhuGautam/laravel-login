@@ -40,7 +40,8 @@ Route::group(['middleware' => ['auth', 'managerauth']], function(){
     Route::get('/dashboard', [ManagerController::class, 'index'])->name('dashboard');
 });
 
-Route::get('/employee', 'EmployeeController@index')->name('employee');
+Route::resource('employee', 'EmployeeController');
+// Route::get('/employee', 'EmployeeController@index')->name('employee');
 // Route::get('/hotel', 'HotelController@index')->name('hotel');
 //Route::get('/hotel/{hotel}/edit', 'HotelController@show');
 Route::resource('hotel','HotelController');
@@ -66,7 +67,7 @@ Route::post('/getmsg/{id}','RoomController@index')->middleware('auth');
 
 Route::get('/hotel/{hotelId}/room/{roomId}/{bookId}','BookingController@index')->middleware('auth');
 
-Route::get('/hotel/{hotelId}/room/{roomId}','BookingController@add')->middleware('auth');
-Route::post('/hotel/{hotelId}/room/{roomId}','BookingController@store')->middleware('auth');
+// Route::get('/hotel/{hotelId}/room/{roomId}','BookingController@add')->middleware('auth');
+// Route::post('/hotel/{hotelId}/room/{roomId}','BookingController@store')->middleware('auth');
 
 Route::get('/verify','RegisterController@verifyuser')->name('verify.user');

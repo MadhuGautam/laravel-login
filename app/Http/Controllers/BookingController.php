@@ -47,7 +47,6 @@ class BookingController extends Controller
         $roomid = $request->roomId;
 
         // $hotel = hotelLists::where('id', $hotelid)->get();
-
         // return view('hotels/addBooking', ['hotelid' => $hotelid, 'roomid' => $roomid, 'hotel' => $hotel ]);
 
         $roomData = roomLists::where('hotel_lists_id', $hotelid)->where('id', $roomid)->

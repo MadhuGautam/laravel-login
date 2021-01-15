@@ -6,7 +6,10 @@
             <div class="card">
               <div class="card-header card-header-primary">
                 <h4 class="card-title ">Employee List</h4>
-                <p class="card-category">Current working staff details</p>
+                {{-- <p class="card-category">Current working staff details</p> --}}
+                <button type="button" rel="tooltip" title="Add new Employee" class="btn btn-success btn-sm float-right" onclick="location.href='{{ url('/employee/create') }}'">
+                    <i class="material-icons">add</i>
+                </button>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -53,6 +56,21 @@
                                         <i class="material-icons">close</i>
                                     </button>
                                 </td>
+                                <td class="text-primary">
+
+                                    <button type="button" rel="tooltip" title="Edit Details" class="btn btn-primary btn-link btn-sm d-inline" onclick="location.href='{{ route('employee.edit',[$row->id]) }}'">
+                                        <i class="material-icons">edit</i>
+                                    </button>
+
+                                    <form id="employee-delete-form"  method="POST" action="{{ route('employee.destroy',$row->id) }}">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                    </form>
+
+                        </td>
                             </tr>
 
                         @endforeach

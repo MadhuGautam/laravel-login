@@ -19,16 +19,17 @@ class RoomController extends Controller
         $this->middleware('auth');
     }
 
-    // /**
-    //  * Display a listing of the resource.
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function index(Request $request)
-    // {
-    //     $data = roomLists::with('bookings')->where('hotel_lists_id', $request->id)->get();
-    //     return view('hotels/index', ['data' => $data]);
+    /**
+     * Display a listing of the resource.
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $data = roomLists::with('bookings')->where('hotel_lists_id', $request->id)->get();
+        return $data;
+        //return view('hotels/index', ['data' => $data]);
 
-    // }
+    }
 
     /**
          * Show the form for creating a new resource.

@@ -11,6 +11,6 @@ class BookingListsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\bookingLists::class, 20)->create();
+        factory(App\bookingLists::class, 2)->create();
     }
 }

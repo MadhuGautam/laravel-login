@@ -3,6 +3,7 @@
 @section('content')
     <div class="content">
         <div class="container-fluid">
+            {{$data}}
             <div class="row">
                 <div class="col-md-8">
                     <div class="card">
@@ -20,25 +21,20 @@
                             </div>
 
                             @if(!$data->rooms->isEmpty())
-                                <div id = 'msg' class="row mw-100 m-3">
+                                <div id = 'msg' class="row mw-100 m-3">jdfhgj
                                         {{-- room created dynamically --}}
                                 </div>
 
-                                {{-- <button type="button" rel="tooltip" title="Add Rooms" onclick="location.href='{{ url('/hotel') }}/{{ $data->id.'/addRoom'}}'" class="btn btn-primary btn-link btn-sm">
-                                    <i class="material-icons">add</i> Add More Rooms
-                                </button> --}}
-
                             @else
                                 <h4 class="title">No rooms found</h4>
-                                <span>
-                                <button type="button" rel="tooltip" title="Add Rooms" onclick="location.href='{{ url('/hotel') }}/{{ $data->id.'/room/create'}}'" class="btn btn-primary btn-sm">
-                                        <i class="material-icons">add</i>Add Room
-                                    </button>
-                                </span>
-                                {{-- <button type="button" rel="tooltip" title="Add new Hotel" class="btn btn-success btn-sm float-right" onclick="location.href='{{ url('/hotel/create') }}'">
-                                    <i class="material-icons">add</i>
-                                </button> --}}
+
                             @endif
+
+                            <span>
+                                <button type="button" rel="tooltip" title="Add Room" onclick="location.href='{{ url('/hotel') }}/{{ $data->id.'/room/create'}}'" class="btn btn-primary btn-sm">
+                                    <i class="material-icons">add</i>Add Room
+                                </button>
+                            </span>
 
                         </div>
                     </div>
@@ -47,7 +43,7 @@
                     <div class="card card-profile">
                         <div class="card-avatar">
                             <a href="javascript:;">
-                                <img class="img" src="{{$data->hotel_image}}" />
+                                <img class="img" src="{{ (str_contains($data->hotel_image,"https"))? $data->hotel_image : '../../uploads/'.$data->hotel_image }}" />
                             </a>
                         </div>
                         <div class="card-body">
@@ -82,30 +78,27 @@
                     },
                 url:'/getmsg/{id}',
                 data: { "_token": "{{ csrf_token() }}", id: hotel_id},
-
                 success:function(data) {
                 if(data){
-                    var json_data="";
-                    var booking_status="";
+                    var json_data ="";
+                    var booking_status ="";
                     var border_color = "";
                     var booking_detail_link = "";
 
-                    console.log(data);
                     jQuery.each(data, function(i, val)
                     {
-                        if(val.bookings.length)
+                        if(val.bookings)
                         {
-
                             jQuery.each(val.bookings, function(j, bookVal)
                             {
                                 var bookingfromdatetime = bookVal.Booking_date_from;
-                                var bookingfromdate = bookingfromdatetime.split(" ")
+                                var bookingfromdate = bookingfromdatetime.split(" ");
                                 var bookingtodatetime = bookVal.Booking_date_to;
                                 var bookingtodate = bookingtodatetime.split(" ");
                                 var booking_detail_link = "";
 
                                 console.log(Date.parse(bookingtodate[0])+" "+ Date.parse(bookingtodate[0]));
-                                console.log(fd);
+                                console.log(bookingtodate[0]);
                                 console.log((fd >= Date.parse(bookingfromdate[0])) && (fd <= Date.parse(bookingtodate[0])) );
 
                                 if((fd >= Date.parse(bookingfromdate[0])) && (fd <= Date.parse(bookingtodate[0])) )
@@ -146,6 +139,11 @@
 
                     });
 
+                }
+                else{
+                    json_data += '<p>data not found</p>';
+
+                                $("#msg").empty().append(json_data);
                 }
               }
            });

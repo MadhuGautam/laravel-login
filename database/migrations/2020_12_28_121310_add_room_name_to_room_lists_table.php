@@ -15,7 +15,7 @@ class AddRoomNameToRoomListsTable extends Migration
     {
         Schema::table('room_lists', function (Blueprint $table) {
             //
-            $table->string('room_name')->after('room_cat')->nullable();
+            $table->string('room_name');
         });
     }
 
