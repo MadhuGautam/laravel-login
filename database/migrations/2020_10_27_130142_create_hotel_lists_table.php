@@ -34,6 +34,7 @@ class CreateHotelListsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('hotel_lists');
     }
 }

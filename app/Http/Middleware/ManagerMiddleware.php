@@ -27,11 +27,14 @@ class ManagerMiddleware
         {
             return redirect('admin');
         }
+        else if( $usertype == 'staff' && $usertype != null)
+        {
+            return redirect('home');
+        }
         else{
 
             return redirect('home');
         }
-
 
     }
 }

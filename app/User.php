@@ -17,7 +17,8 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'usertype', 'api_token'
+        'name', 'email', 'password', 'usertype', 'verification_code', 'profile_pic','hotel_lists_id','salary',
+        'description','remember_token','added_by', 'email_verified_at','address','contact'
     ];
 
     /**
@@ -26,7 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'profile_pic'
+        //'remember_token',
     ];
 
     /**
@@ -36,13 +37,14 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        //'added_by' =>1,
     ];
 
     public function generateToken()
     {
-        $this->api_token = str_random(60);
+        $this->verification_code = str_random(60);
         $this->save();
 
-        return $this->api_token;
+        return $this->verification_code;
     }
 }

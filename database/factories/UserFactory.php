@@ -4,6 +4,7 @@
 
 use App\User;
 use Faker\Generator as Faker;
+use App\hotelLists;
 use Illuminate\Support\Str;
 
 /*
@@ -25,14 +26,14 @@ $factory->define(User::class, function (Faker $faker) {
         'email_verified_at' => now(),
         'password' => Hash::make('password'), // password
         'remember_token' => Str::random(10),
-        'usertype' => 'manager', //$faker->randomElements($array = array ('staff','manager'), $count = 1)[0],
+        'usertype' => $faker->randomElements($array = array ('staff','manager'), $count = 1)[0],
         'verification_code' => Str::random(10),
-        'hotel_lists_id' => factory(App\hotelLists::class)->create()->id,
+        'hotel_lists_id' => (hotelLists::select('id')->inRandomOrder()->first())->id,
         'added_by' =>1,
-        'description' => "user descriptions",
+        'description' => $faker->paragraph,
         'profile_pic' => "http://loremflickr.com/200/200/cats/",
         'address' => $faker->address,
-        'contact' => '7852460225',
+        'contact' => 7852460225,
         'salary' => $faker->numberBetween(15000,20000)
 
     ];

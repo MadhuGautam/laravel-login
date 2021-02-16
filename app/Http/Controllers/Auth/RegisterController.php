@@ -89,7 +89,7 @@ class RegisterController extends Controller
         $user->name= $request->name;
         $user->email = $request->email;
         $user->password =  Hash::make($request->password);
-        $user->usertype = "manager";
+        $user->usertype = "staff";
         $user->verification_code = sha1(time());
         $user->save();
 

@@ -10,7 +10,32 @@ use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
-    public function index(Request $request)
+    /**
+     * Display a listing of the resource.
+     * @return \Illuminate\Http\Response
+    */
+    public function index($hotelId, $roomId, $bookingDate)
+    {
+        $bookData = $roomData = $questData = $hotelData =null;
+
+        $bookData = bookingLists::where('hotel_lists_id', $hotelId)->where('room_lists_id', $roomId)
+        ->whereDate('Booking_date_from',$bookingDate)->orWhereDate('Booking_date_to',$bookingDate)->get();
+        if($bookData){
+
+            foreach($bookData as $book){
+                $hotelData = hotelLists::Select('hotel_name')->where('id', $book->hotel_lists_id)->get();
+                $roomData = roomLists::Select('room_cat')->where('id', $book->room_lists_id)->get();
+                $questData = questLists::where('booking_lists_id', $book->id)->get();
+
+            }
+
+        }
+
+        return view('hotels/bookingDetails', ['data' => $bookData, 'room' => $roomData, 'quest' => $questData, 'hotel' =>$hotelData]);
+
+    }
+
+    public function show(Request $request)
     {
         $hotelid = $request->hotelId;
         $roomid = $request->roomId;
@@ -41,18 +66,15 @@ class BookingController extends Controller
 
     }
 
-    public function add(Request $request)
+    public function create(Request $request)
     {
         $hotelid = $request->hotelId;
         $roomid = $request->roomId;
 
-        // $hotel = hotelLists::where('id', $hotelid)->get();
-        // return view('hotels/addBooking', ['hotelid' => $hotelid, 'roomid' => $roomid, 'hotel' => $hotel ]);
-
         $roomData = roomLists::where('hotel_lists_id', $hotelid)->where('id', $roomid)->
         addSelect(['hotel_name' => hotelLists::select('hotel_name')->whereColumn('hotel_lists_id', 'hotel_lists.id')])->get();
 
-        return view('hotels/addBooking', ['hotel' => $roomData ]);
+        return view('hotels/addBooking', ['data' => $roomData ]);
     }
 
     public function store(Request $request){
@@ -87,6 +109,13 @@ class BookingController extends Controller
             );
         }
 
-        return $questId;
+        return redirect()->action('HotelController@show', $request->hotel_id);
+    }
+
+    public function details()
+    {
+        $data = bookingLists::select('id','booking_name','hotel_lists_id','room_lists_id','Booking_date_from','Booking_date_to','Booking_num_of_days','booking_status')->get();
+        return view('booking/index',['data' =>$data]);
+
     }
 }

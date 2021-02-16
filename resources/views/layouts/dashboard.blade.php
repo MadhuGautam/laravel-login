@@ -36,6 +36,24 @@
               <p>Hotels</p>
             </a>
           </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="{{ url('/bookings') }}">
+              <i class="material-icons">library_books</i>
+              <p>Bookings</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="{{ url('/customers') }}">
+              <i class="material-icons">library_books</i>
+              <p>Customers</p>
+            </a>
+          </li>
+           <li class="nav-item ">
+            <a class="nav-link" href="{{ url('/accounts') }}">
+              <i class="material-icons">library_books</i>
+              <p>Accounting</p>
+            </a>
+          </li>
           <!-- your sidebar here -->
         </ul>
       </div>

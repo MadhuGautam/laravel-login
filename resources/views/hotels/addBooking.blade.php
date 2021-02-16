@@ -1,9 +1,9 @@
 @extends('layouts.dashboard')
-{{$hotel}}
+
 @section('content')
     <div class="content">
         <div class="container-fluid">
-            @foreach ($hotel as $item)
+            @foreach ($data as $item)
 
                 <div class="row">
                     <div class="col-md-10">
@@ -25,7 +25,7 @@
                                     </div>
                                 @endif
                                 <div class="table-responsive">
-                                    <form action="#" method="POST">
+                                    <form action="{{ route('book.store',[$item->hotel_lists_id, $item->id])}}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <input type="hidden" id="hotel_id" name="hotel_id" value="{{ $item->hotel_lists_id }}">
                                         <table class="table" cellspacing=13 cellpadding=10>

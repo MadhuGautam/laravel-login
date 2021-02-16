@@ -12,12 +12,25 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UserSeeder::class);
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+       // $this->cleanDatabase();
+        //DB::statement('SET FOREIGN_KEY_CHECKS = "0"');
         $this->call([
-            // UsersTableSeeder::class,
         HotelListsTableSeeder::class,
-        RoomListsTableSeeder::class
+        UsersTableSeeder::class,
+        RoomListsTableSeeder::class,
+        BookingListsTableSeeder::class,
+        QuestListsTableSeeder::class,
+
         ]);
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+       // DB::statement('SET FOREIGN_KEY_CHECKS = "1"');
+    }
+
+    public function cleanDatabase()
+    {
+        DB::statement('SET FOREIGN_KEY_CHECKS="0";');
+        foreach ($this->tables as $table) {
+            DB::table($table)->truncate();
+        }
+        DB::statement('SET FOREIGN_KEY_CHECKS="1";');
     }
 }

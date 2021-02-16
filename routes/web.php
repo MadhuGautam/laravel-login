@@ -46,7 +46,11 @@ Route::resource('employee', 'EmployeeController');
 //Route::get('/hotel/{hotel}/edit', 'HotelController@show');
 Route::resource('hotel','HotelController');
 Route::resource('hotel/{hotelId}/room','RoomController');
-Route::view('/booking', 'booking/index')->name('booking');
+Route::resource('/hotel/{hotelId}/room/{roomId}/book','BookingController');
+Route::get('/hotel/{hotelId}/room/{roomId}/bookedDate/{bookingDate}', 'BookingController@index')->name('booking')->middleware('auth');
+Route::resource('accounts','AccountController');
+Route::get('/bookings','BookingController@details');
+Route::get('/customers','questController@details');
 
 //Auth::routes(['verify' => true]);
 
@@ -63,9 +67,10 @@ Route::get('ajax',function() {
     return view('hotels/description');
  })->middleware('auth');
 
-Route::post('/getmsg/{id}','RoomController@index')->middleware('auth');
+ Route::post('getmsg', 'RoomController@index')->name('getmsg.post');
+//Route::post('/getmsg/{id}','RoomController@index')->middleware('auth');
 
-Route::get('/hotel/{hotelId}/room/{roomId}/{bookId}','BookingController@index')->middleware('auth');
+//Route::get('/hotel/{hotelId}/room/{roomId}/{bookId}','BookingController@index')->middleware('auth');
 
 // Route::get('/hotel/{hotelId}/room/{roomId}','BookingController@add')->middleware('auth');
 // Route::post('/hotel/{hotelId}/room/{roomId}','BookingController@store')->middleware('auth');

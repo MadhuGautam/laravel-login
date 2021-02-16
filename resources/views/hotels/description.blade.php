@@ -3,7 +3,6 @@
 @section('content')
     <div class="content">
         <div class="container-fluid">
-            {{$data}}
             <div class="row">
                 <div class="col-md-8">
                     <div class="card">
@@ -16,12 +15,12 @@
                             <div class="row mw-25 m-3">
                                 <div id="date-picker-example" class="md-form md-outline input-with-post-icon datepicker">
                                     <label for="booking_date">Select Date</label>
-                                    <input type="date" id="booking_date" class="form-control" value="{{ date("Y-m-d") }}" onchange="getMessage()">
+                                    <input type="date" id="booking_date" class="form-control" value="{{ date('Y-m-d') }}" onchange="getMessage()">
                                 </div>
                             </div>
 
                             @if(!$data->rooms->isEmpty())
-                                <div id = 'msg' class="row mw-100 m-3">jdfhgj
+                                <div id = 'msg' class="row mw-100 m-3">rooms
                                         {{-- room created dynamically --}}
                                 </div>
 
@@ -31,7 +30,7 @@
                             @endif
 
                             <span>
-                                <button type="button" rel="tooltip" title="Add Room" onclick="location.href='{{ url('/hotel') }}/{{ $data->id.'/room/create'}}'" class="btn btn-primary btn-sm">
+                                <button type="button" rel="tooltip" title="Add Room" onclick="location.href='{{ route('room.create', $data->id)}}'" class="btn btn-primary btn-sm">
                                     <i class="material-icons">add</i>Add Room
                                 </button>
                             </span>
@@ -67,84 +66,59 @@
 
         function getMessage()
         {
+
             var hotel_id = {{$data->id}};
             var formdate = document.getElementById("booking_date").value;
             var fd = Date.parse(formdate);
+            var json_data ="";
 
             $.ajax({
                 type:'POST',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                url:'/getmsg/{id}',
-                data: { "_token": "{{ csrf_token() }}", id: hotel_id},
+                //url:'/getmsg/{id}{bookingDate}',
+                url: '{{ route("getmsg.post") }}',
+                data: { "_token": "{{ csrf_token() }}", id: hotel_id, bookingDate: formdate},
                 success:function(data) {
+
                 if(data){
-                    var json_data ="";
+                    console.log(data);
                     var booking_status ="";
                     var border_color = "";
                     var booking_detail_link = "";
 
                     jQuery.each(data, function(i, val)
                     {
-                        if(val.bookings)
+                         if(val.room_availability_status!="0" && val.room_availability_status!=null)
                         {
-                            jQuery.each(val.bookings, function(j, bookVal)
-                            {
-                                var bookingfromdatetime = bookVal.Booking_date_from;
-                                var bookingfromdate = bookingfromdatetime.split(" ");
-                                var bookingtodatetime = bookVal.Booking_date_to;
-                                var bookingtodate = bookingtodatetime.split(" ");
-                                var booking_detail_link = "";
 
-                                console.log(Date.parse(bookingtodate[0])+" "+ Date.parse(bookingtodate[0]));
-                                console.log(bookingtodate[0]);
-                                console.log((fd >= Date.parse(bookingfromdate[0])) && (fd <= Date.parse(bookingtodate[0])) );
+                            booking_status = "Booked"; border_color = "border-danger";
+                            booking_detail_link = "{{ url('/hotel') }}/"+val.hotel_lists_id+"{{ '/room' }}/"+val.id+"{{ '/bookedDate' }}/"+formdate;
+                        }
+                        else{
 
-                                if((fd >= Date.parse(bookingfromdate[0])) && (fd <= Date.parse(bookingtodate[0])) )
-                                {
-                                    console.log(bookVal.id);
-                                    booking_status = "Booked"; border_color = "border-danger"; booking_detail_link = "{{ url('/hotel') }}/"+bookVal.hotel_lists_id+"{{ '/room' }}/"+val.id+"/"+bookVal.id;
+                            booking_status = "Available"; border_color = "border-success";
+                            booking_detail_link = "{{ url('/hotel') }}/"+val.hotel_lists_id+"{{ '/room' }}/"+val.id+"{{ '/book/create' }}/";
+                        }
 
-                                }else{
-
-                                    booking_status = "Available"; border_color = "border-success"; booking_detail_link = "{{ url('/hotel') }}/"+bookVal.hotel_lists_id+"{{ '/room' }}/"+val.id;
-                                }
-
-                                json_data += '<div class="col-lg-3 col-md-6 col-sm-6 border border-success rounded mw-15 m-1 '+ border_color +' ">'+
+                        json_data += '<div class="col-lg-3 col-md-6 col-sm-6 border border-success rounded mw-15 m-1 '+ border_color +' ">'+
                                         '<a href="' + booking_detail_link + '"><div class="text-center">'+
-                                            '<h2>'+ val.id +'</h2>'+
+                                            '<h2>'+ val.room_name +'</h2>'+
                                             '<p>'+ val.room_cat +'<br>'+ booking_status +'</p>'+
                                         '</div></a>'+
                                     '</div>';
 
                                     $("#msg").empty().append(json_data);
 
-                            });
-                        }
-                        else{
-
-                                booking_status = "Available"; border_color = "border-success"; booking_detail_link = "#";
-
-                                json_data += '<div class="col-lg-3 col-md-6 col-sm-6 border border-success rounded mw-15 m-1 '+ border_color +' ">'+
-                                    '<a href="' + booking_detail_link + '"><div class="text-center">'+
-                                        '<h2>'+ val.id +'</h2>'+
-                                        '<p>'+ val.room_cat +'<br>'+ booking_status +'</p>'+
-                                    '</div></a>'+
-                                '</div>';
-
-                                $("#msg").empty().append(json_data);
-
-                            }
-
                     });
-
                 }
                 else{
                     json_data += '<p>data not found</p>';
 
                                 $("#msg").empty().append(json_data);
                 }
+
               }
            });
 

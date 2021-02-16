@@ -12,6 +12,23 @@
                 </button>
               </div>
               <div class="card-body">
+
+                @if (count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <strong>Errors:</strong>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                    @if(session()->has('success'))
+                    <div class="alert alert-success">
+                        {{ session()->get('success') }}
+                    </div>
+                @endif
+
                 <div class="table-responsive">
                   <table class="table">
                     <thead class=" text-primary">
@@ -40,21 +57,13 @@
                                     {{ $row->id  }}
                                 </td>
                                 <td>
-                                    {{ $row->name  }}
+                                   <a href="{{ url('/employee') }}/{{ $row->id  }}">{{ $row->name }}</a>
                                 </td>
                                 <td>
                                     {{ $row->hotel_lists_id }}
                                 </td>
                                 <td>
                                     {{ $row->email }}
-                                </td>
-                                <td class="text-primary">
-                                    <button type="button" rel="tooltip" title="Edit Details" class="btn btn-primary btn-link btn-sm">
-                                        <i class="material-icons">edit</i>
-                                    </button>
-                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                        <i class="material-icons">close</i>
-                                    </button>
                                 </td>
                                 <td class="text-primary">
 
@@ -70,7 +79,7 @@
                                         </button>
                                     </form>
 
-                        </td>
+                                </td>
                             </tr>
 
                         @endforeach

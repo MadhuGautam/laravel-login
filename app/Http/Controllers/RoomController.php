@@ -21,13 +21,36 @@ class RoomController extends Controller
 
     /**
      * Display a listing of the resource.
+     * call thru ajax from hotel description view
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-        $data = roomLists::with('bookings')->where('hotel_lists_id', $request->id)->get();
-        return $data;
-        //return view('hotels/index', ['data' => $data]);
+        $data = null;
+        $bookingDate=$request->bookingDate;
+
+        $bookings = bookingLists::where('hotel_lists_id', $request->id)->whereDate('Booking_date_from',$bookingDate)
+            ->orWhereDate('Booking_date_to',$bookingDate)->get();
+
+        roomLists::where('hotel_lists_id', $request->id)->update(['room_availability_status' =>'0']);
+
+        // $rooms=roomLists::select('id')->whereIn('id', function($query){
+        //     $query->select('room_lists_id')
+        //     ->from(with(new bookingLists)->getTable())
+        //     ->whereDate('Booking_date_from','<=','2021-02-09')
+        //     ->orWhereDate('Booking_date_to','>=','2021-02-10')
+        //     ->where('hotel_lists_id',  $request->id);
+        // })->get();
+
+
+        if($bookings){
+            foreach($bookings as $roomStatus){
+                roomLists::where('id', $roomStatus->room_lists_id)->where('hotel_lists_id', $request->id)->update(['room_availability_status' =>'1']);
+            }
+        }
+
+        $data = roomLists::where('hotel_lists_id', $request->id)->get();
+        return  $data;
 
     }
 
@@ -39,7 +62,6 @@ class RoomController extends Controller
     public function create($hotelId)
     {
         return view('hotels/addRoom', ['hotel_id' =>$hotelId]);
-
     }
 
     /**
@@ -47,16 +69,22 @@ class RoomController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function show($id)
+    public function show($hotelId,$id)
     {
 
-        //$room = roomLists::with('hotelLists')->findOrFail($id); //call hotelLists function in App\roomLists
-        $room = roomLists::addSelect(['hotel_lists_id' => hotelLists::select('hotel_name')->whereColumn('hotel_lists_id', 'hotel_lists.id')])->get();
+        $room = roomLists::where('id', $id)->where('hotel_lists_id', $hotelId)->addSelect(['hotel_name' => hotelLists::select('hotel_name')->whereColumn('hotel_lists_id', 'hotel_lists.id')])->get();
 
-        if(is_null($room)){
-            return response()->json(null,404);
+        if($room->isEmpty() || is_null($room)){
+            return response()->json("Record not found...",404);
         }
-        return $room;
+        // elseif($room->first()->room_availability_status =="1"){
+
+        //     return view('hotels/addBooking',['data' => $room]);
+        // }
+        else{
+
+            return "booked page";
+        }
 
     }
 

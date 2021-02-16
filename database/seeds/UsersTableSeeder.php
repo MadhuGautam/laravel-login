@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
+use App\hotelLists;
 class UsersTableSeeder extends Seeder
 {
     /**
@@ -22,11 +23,11 @@ class UsersTableSeeder extends Seeder
             'remember_token' => Str::random(10),
             'usertype' =>  'admin',
             'verification_code' => Str::random(10),
-            'hotel_lists_id' => 1,
-            'added_by' =>1,
+            'hotel_lists_id' => (hotelLists::select('id')->inRandomOrder()->first())->id,
+            'added_by' =>0,
             'description' => "Admin Profile",
             'profile_pic' => "http://loremflickr.com/200/200/cats/",
-            'address' => '',
+            'address' => 'CHD',
             'contact' => 7824605575,
             'salary' => 100000
         ]);

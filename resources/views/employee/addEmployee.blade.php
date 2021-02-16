@@ -30,12 +30,23 @@
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="row"> --}}
+                                <div class="row">
                                    <div class="col-md-6">
 
+                                        <label>Assigned Hotel</label>
+                                        <select name="hotel_lists_id" id="hotel_lists_id" class="form-control">
+                                            @foreach ($hotel_list as $item)
+                                                <option value={{ $item->id}}>{{ $item->hotel_name}}</option>
+                                            @endforeach
+                                            {{-- <option value={{ $hotel_list[0]}}>{{ $hotel_list[0]}}</option> --}}
+                                        </select>
+                                        {{-- <input type="hidden" id="user_id" name="user_id" class="form-control" value="1" required> --}}
 
-                                            <input type="hidden" id="no_of_rooms" name="no_of_rooms" class="form-control" value="0" required>
-                                            <input type="hidden" id="user_id" name="user_id" class="form-control" value="33" required>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <label>Salary</label>
+                                        <input type="number" id="salary" name="salary" class="form-control" value="" min="15000" max="20000" required>
 
                                     </div>
                                 </div>
@@ -43,7 +54,7 @@
                                     <div class="col-md">
 
                                         <label>Employee Name</label>
-                                        <input type="text" id="employee_name" name="employee_name" class="form-control" value="" required>
+                                        <input type="text" id="employee_name" name="name" class="form-control" value="" required>
 
                                     </div>
                                 </div>
@@ -51,29 +62,43 @@
                                     <div class="col-md">
 
                                         <label>Employee Email</label>
-                                        <input type="text" id="employee_email" name="employee_email" class="form-control" value="" required>
+                                        <input type="email" id="email" name="email" class="form-control" value="" required>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                        <label>Password</label>
+                                        <input type="password" id="password" name="password" class="form-control" value="password" required>
+
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <label>Position</label>
+                                        <input type="text" id="user_type" name="user_type" class="form-control" value="" required>
 
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md">
 
-                                        <label>Employee Position</label>
-                                        <input type="text" id="user_type" name="user_type" class="form-control" value="" required>
+                                        <label>Address</label>
+                                        <input type="text" id="address" name="address" class="form-control" value="" required>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md">
 
                                         <label>Contact</label>
-                                        <input type="text" id="Contact" name="Contact" class="form-control" value="" required>
+                                        <input type="text" id="contact" name="contact" class="form-control" value="" required>
                                     </div>
                                 </div>
 
                             </div>
                             <div class="col-md-6">
-                                {{-- <label>Hotel Image</label>--}}
-                                <input type="hidden" id="added_by" name="added_by" class="form-control" value="" required>
+                                <label>Profile Pic</label>
+                                <input type="hidden" id="added_by" name="added_by" class="form-control" value="1" required>
                                 <div class="image-upload-one">
                                     <div class="center">
                                       <div class="form-input">
@@ -107,7 +132,7 @@
                         <div class="row">
                             <div class="col-md">
 
-                                <label>Hotel Description</label>
+                                <label>Description</label>
                                 <textarea class="form-control" id="description" name="description" rows="5" required></textarea>
                             </div>
                         </div>

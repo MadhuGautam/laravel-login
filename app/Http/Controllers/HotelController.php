@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\hotelLists;
+use App\roomLists;
 Use Session;
 class HotelController extends Controller
 {
@@ -23,6 +24,15 @@ class HotelController extends Controller
      */
     public function index()
     {
+
+        $room_data = roomLists::select('hotel_lists_id', roomLists::raw('count(*) as total_rooms'))->groupBy('hotel_lists_id')->get();
+        //return view('booking/index', ['data' => $data]);
+
+        foreach($room_data as $room)
+        {
+            hotelLists::where('id', $room->hotel_lists_id)->update(['no_of_rooms' => $room->total_rooms]);
+        }
+
         $data = hotelLists::with('rooms')->get();
         return view('hotels/index', ['data' => $data]);
     }
@@ -60,7 +70,7 @@ class HotelController extends Controller
                 $path = public_path().'/uploads//';
 
                 //code for remove old file
-                if($hotel->hotel_image != ''  && $hotel->hotel_image != null){
+                if($hotel->hotel_image != ''  && $hotel->hotel_image != null && !(str_contains($hotel->hotel_image,"http"))){
                     $file_old = $path.$hotel->hotel_image;
                     unlink($file_old);
                 }
@@ -128,9 +138,6 @@ class HotelController extends Controller
 
         }
 
-
-
-
     }
 
 
@@ -163,7 +170,6 @@ class HotelController extends Controller
         }
         return view('hotels.editHotel', ['data' => $hotel]);
     }
-
 
     /**
      * Update the specified resource in storage.
